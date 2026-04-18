@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.locks.ReentrantLock;
 import org.springframework.stereotype.Repository;
+import tools.jackson.core.JacksonException;
 import tools.jackson.databind.ObjectMapper;
 
 @Repository
@@ -51,7 +52,7 @@ public class JsonPublicationHistoryRepository implements PublicationHistoryRepos
 
         try {
             return objectMapper.readValue(historyFile.toFile(), PublicationHistory.class);
-        } catch (IOException exception) {
+        } catch (JacksonException exception) {
             throw new IllegalStateException("Unable to read publication history from " + historyFile, exception);
         }
     }
@@ -60,7 +61,7 @@ public class JsonPublicationHistoryRepository implements PublicationHistoryRepos
         try {
             Files.createDirectories(historyFile.getParent());
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(historyFile.toFile(), publicationHistory);
-        } catch (IOException exception) {
+        } catch (JacksonException | IOException exception) {
             throw new IllegalStateException("Unable to write publication history to " + historyFile, exception);
         }
     }
