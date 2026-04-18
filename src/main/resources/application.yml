@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: agent-instagram
+
+instagram:
+  access-token: ${INSTAGRAM_ACCESS_TOKEN:}
+  ig-user-id: ${INSTAGRAM_IG_USER_ID:}
+  media:
+    stories-dir: ./media/stories
+    posts-dir: ./media/posts
+    public-base-url: ${INSTAGRAM_PUBLIC_BASE_URL:}
+  history:
+    file: ./data/publication-history.json
+  scheduler:
+    enabled: false
+    story-cron: "0 0 10 * * *"
+    feed-cron: "0 5 10 * * *"
+  graph:
+    base-url: https://graph.facebook.com
+    api-version: v24.0
+    status-poll-interval: PT5S
+    status-timeout: PT2M
